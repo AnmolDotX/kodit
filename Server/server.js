@@ -14,7 +14,7 @@ const io = new Server(server,{ cors: {
 
 
 app.get("/", (req, res) => {
-    res.send("<h1>hello worldd</h1>");
+    return res.send('<h1>you are on wrong page<a href="https://kodit.vercel.app">go to home<a></h1>');
 })
 
 
