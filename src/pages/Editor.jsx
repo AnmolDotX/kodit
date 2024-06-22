@@ -38,7 +38,7 @@ function Editor() {
 
             function handleErrors(e) {
                 console.log('socket error', e);
-                toast.error('Socket connection failed, try again later.');
+                toast.error('Socket connection failed, try again later.', e.message);
                 navigate('/');
             }
 
