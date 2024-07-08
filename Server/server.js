@@ -8,13 +8,13 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 const io = new Server(server,{ cors: {
-    origin: "*",  // You can restrict this to your frontend domain
+    origin: "*", 
     methods: ["GET", "POST"]
 }});
 
 
 app.get("/", (req, res) => {
-    return res.send('<h1>you are on wrong page<a href="https://kodit.vercel.app">go to home<a></h1>');
+    return res.send('<h1>you are on wrong page <a href="https://kodit.vercel.app"> go to home <a></h1>');
 })
 
 

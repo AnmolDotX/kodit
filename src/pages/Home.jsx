@@ -24,6 +24,12 @@ function Home() {
     navigate(`/editor/${roomId}`);
   };
 
+  const handleEnterButton = (e) => {
+    if (e.code == 'Enter') {
+      joinRoom()
+    }
+  }
+
   return (
     <>
       {/* main container */}
@@ -48,6 +54,7 @@ function Home() {
                 placeholder='Enter room id'
                 onChange={(e) => setroomId(e.target.value)}
                 value={roomId}
+                onKeyUp={handleEnterButton}
               />
 
               <input
@@ -57,6 +64,7 @@ function Home() {
                 placeholder='Enter username'
                 onChange={(e) => setUserName(e.target.value)}
                 value={userName}
+                onKeyUp={handleEnterButton}
               />
 
               <div className='w-full flex justify-end'>
@@ -75,7 +83,7 @@ function Home() {
                   className='text-sky-600 hover:text-sky-500 transition-all'
                   href='#'
                   onClick={createRoomId}
-                  title="create new room id"
+                  title="Click or Press Enter to join the room"
                 >
                   new room
                 </a>{" "}
