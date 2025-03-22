@@ -7,8 +7,20 @@ import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
 
-function EditorComponent({ socketRef, roomId, onCodeChange }) {
+function EditorComponent({
+  socketRef,
+  roomId,
+  onCodeChange,
+  selectedLanguage,
+}) {
   const [value, setValue] = React.useState("");
+
+  const languageExtensions = {
+    javascript: [javascript({ jsx: true, typescript: true })],
+    python: [python()],
+    java: [java()],
+    cpp: [cpp()],
+  };
 
   const onChange = React.useCallback((code, viewUpdate) => {
     onCodeChange(code);
@@ -35,11 +47,11 @@ function EditorComponent({ socketRef, roomId, onCodeChange }) {
 
   return (
     <CodeMirror
-      className='text-lg border border-black'
+      className="text-lg border border-black"
       value={value}
-      height='60vh'
+      height="60vh"
       theme={tokyoNightStorm}
-      extensions={[javascript({ jsx: true, typescript : true }), python(), java(), cpp()]}
+      extensions={languageExtensions[selectedLanguage]}
       onChange={onChange}
     />
   );

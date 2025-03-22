@@ -7,10 +7,12 @@ import dotenv from "dotenv"
 dotenv.config();
 const app = express();
 const server = createServer(app);
-const io = new Server(server,{ cors: {
-    origin: "*", 
-    methods: ["GET", "POST"]
-}});
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 
 app.get("/", (req, res) => {
@@ -35,7 +37,6 @@ function getAllConnectedClients(roomId) {
 }
 
 io.on("connection", (socket) => {
-    console.log("connected" + socket.id);
 
     //listening on join event
     socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
@@ -73,10 +74,14 @@ io.on("connection", (socket) => {
         io.to(roomId).emit(ACTIONS.OUTPUT_CODE, { output });
     });
 
-    socket.on(ACTIONS.CHAT_MESSAGE,({roomId,message,username})=>{
+    socket.on(ACTIONS.CHAT_MESSAGE, ({ roomId, message, username }) => {
         // console.log(username+" : "+ message)
-        io.to(roomId).emit(ACTIONS.CHAT_MESSAGE,{message,username});
+        io.to(roomId).emit(ACTIONS.CHAT_MESSAGE, { message, username });
     })
+
+    socket.on(ACTIONS.LANGUAGE_CHANGE, ({ roomId, language }) => {
+        socket.to(roomId).emit(ACTIONS.LANGUAGE_CHANGE, { language });
+    });
 
 
 
@@ -92,7 +97,8 @@ io.on("connection", (socket) => {
         socket.leave();
     })
 })
-const port = process.env.PORT || 5000
+const port = process.env.PORT
+
 server.listen(port, () => {
     console.log(`server running on port ${port}`);
 })
